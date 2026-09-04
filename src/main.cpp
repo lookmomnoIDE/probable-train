@@ -37,11 +37,7 @@ std::string title = R"raw(
 
 //Forward declarations
 
-class Dummy
-{
-public:
-	std::vector<std::string> m_wordList;
-};
+class Dummy{public:std::vector<std::string> m_wordList;};
 void getWordList(std::string path, Dummy& dummy);
 std::vector<std::string> compareLists(Dummy& dict, Dummy& words);
 std::string getCypher(std::string key);
