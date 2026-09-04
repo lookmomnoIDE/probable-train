@@ -143,6 +143,7 @@ void getWordList(std::string path, Dummy& dummy)
 		//std::cout << word << std::endl;
 		dummy.m_wordList.push_back(word);
 	}
+	fin.close();
 }
 
 
@@ -214,6 +215,7 @@ std::string encrypt(std::string cypher, std::string path)
 		}
 	}
 	std::cout << output << std::endl;
+	fin.close();
 	return output;
 }
 
@@ -236,6 +238,7 @@ std::string decrypt(std::string cypher, std::string path)
 			}
 		}
 	}
+	fin.close();
 	return output;
 }
 
@@ -245,6 +248,7 @@ void writeToFile(const std::string& content, const std::string& path)
 	std::ofstream fout(path);
 	std::cout << content << std::endl;
 	fout << content;
+	fout.close();
 }
 
 
