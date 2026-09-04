@@ -38,7 +38,9 @@ std::vector<std::string> compareLists(Dummy& dict, Dummy& words);
 std::string getCypher(std::string key);
 std::string encrypt(std::string cypher, std::string path);
 std::string decrypt(std::string cypher, std::string path);
+std::string reverseString(std::string input);
 void writeToFile(const std::string& content, const std::string& path);
+
 std::string alphabetLower = "abcdefghijklmnopqrstuvwxyz";
 std::string alphabetUpper = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 std::string cypherLower;
@@ -173,7 +175,7 @@ std::string getCypher(std::string key)
 			}
 		}
 	}
-	cypher += temp;
+	cypher += reverseString(temp);
 	std::cout << "cyher in getCypher: " << cypher << std::endl;
 	return cypher;
 }
@@ -231,4 +233,14 @@ void writeToFile(const std::string& content, const std::string& path)
 	std::ofstream fout(path);
 	std::cout << content << std::endl;
 	fout << content;
+}
+
+std::string reverseString(std::string input)
+{
+	std::string output;
+	for(size_t i = 0; i < input.length(); i++)
+	{
+		output += input[input.length()-i];
+	}
+	return output;
 }
