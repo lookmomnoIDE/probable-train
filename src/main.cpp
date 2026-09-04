@@ -137,6 +137,7 @@ void getWordList(std::string path, Dummy& dummy)
 {
 	std::ifstream fin(path);
 	std::string word;
+	dummy.m_wordList.clear();
 	while (getline(fin, word))
 	{
 		//std::cout << word << std::endl;
@@ -186,7 +187,7 @@ std::string getCypher(std::string key)
 		}
 	}
 	cypher += reverseString(temp);
-	std::cout << "cyher in getCypher: " << cypher << std::endl;
+	std::cout << "cypher in getCypher: " << cypher << std::endl;
 	return cypher;
 }
 
