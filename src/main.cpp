@@ -23,6 +23,15 @@
 
 std::string title = R"raw(
 
+ (   (       )            )         )  (         )  
+ )\ ))\ ) ( /(   *   ) ( /(   (  ( /(  )\ )   ( /(  
+(()/(()/( )\())` )  /( )\())  )\ )\())(()/(   )\()) 
+ /(_))(_)|(_)\  ( )(_)|(_)\ (((_|(_)\  /(_)) ((_)\  
+(_))(_))   ((_)(_(_())  ((_))\___ ((_)(_))   __((_) 
+| _ \ _ \ / _ \|_   _| / _ ((/ __/ _ \| |    \ \/ / 
+|  _/   /| (_) | | |  | (_) | (_| (_) | |__   >  <  
+|_| |_|_\ \___/  |_|   \___/ \___\___/|____| /_/\_\ 
+                                                    
 )raw";
 
 
@@ -118,10 +127,8 @@ int main()
 				writeToFile(decrypt(getCypher(arg2), arg3), arg4);
 			}
 		}
-
 	}
 }
-
 
 
 void getWordList(std::string path, Dummy& dummy)
@@ -134,6 +141,7 @@ void getWordList(std::string path, Dummy& dummy)
 		dummy.m_wordList.push_back(word);
 	}
 }
+
 
 std::vector<std::string> compareLists(Dummy& dict, Dummy& words)
 {
@@ -212,7 +220,7 @@ std::string decrypt(std::string cypher, std::string path)
 	std::ifstream fin(path);
 	std::string message;
 	std::string output;
-	while (getline(fin, message))
+	while(getline(fin, message))
 	{
 		for(size_t j = 0; j < message.length(); j++)
 		{
@@ -228,12 +236,14 @@ std::string decrypt(std::string cypher, std::string path)
 	return output;
 }
 
+
 void writeToFile(const std::string& content, const std::string& path)
 {
 	std::ofstream fout(path);
 	std::cout << content << std::endl;
 	fout << content;
 }
+
 
 std::string reverseString(std::string input)
 {
