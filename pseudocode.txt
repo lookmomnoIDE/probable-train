@@ -31,5 +31,5 @@ crypt -d -kFEATHER encrypt.txt output.txt
 
 decrypts a file using the keyword FEATHER. It is an error not to supply a keyword.
 
--b crypt FEATHER ../encrypt.txt ../encryptedMessage.txt
--b decrypt FEATHER ../encryptedMessage.txt ../decryptedMessage.txt
+-b crypt FEATHER ../res/encrypt.txt ../encryptedMessage.txt
+-b decrypt FEATHER ../res/encryptedMessage.txt ../decryptedMessage.txt
