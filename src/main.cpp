@@ -77,21 +77,23 @@ int main()
 		std::getline(std::cin, input);
 		std::istringstream iss(input);
 		iss >> input >> arg1 >> arg2 >> arg3 >> arg4 >> arg5;
+		//no empty inputs allowed!
+		if(input.empty())
+		{
+			std::cout << "Please enter a valid input." << std::endl;
+		}
 		if(input == "--help" || input == "-h" || input == "?")
 		{
 			std::cout << "--help, -h, or ? for the help menu" << std::endl;
 			std::cout << "--quit or -q to quit the program" << std::endl;
-			std::cout << "-a [path] [pathToCheck]" << std::endl;
+			std::cout << "-a [path] [pathToCheck] or --assignment [path] [pathToCheck]" << std::endl;
+			std::cout << "-b [crypt/decrpyt] [key] [input path] [output path] or "<< std::endl;
+			std::cout << "--bassignment [crypt/decrpyt] [key] [input path] [output path]" << std::endl;
 		}
 		else if(input == "--quit" || input == "-q")
 		{
 			std::cout << "Goodbye!:)" << std::endl;
 			running = false;
-		}
-		//no empty inputs allowed!
-		else if(input.empty())
-		{
-			std::cout << "Please enter a valid input." << std::endl;
 		}
 		//Magic
 		else if(input == "-a" || input == "--assignment")
@@ -126,6 +128,10 @@ int main()
 				//cypherUpper = getCypher(arg2);
 				writeToFile(decrypt(getCypher(arg2), arg3), arg4);
 			}
+		}
+		else
+		{
+			std::cout << "You needn't continue on this path of foolery" << std::endl;
 		}
 	}
 }
