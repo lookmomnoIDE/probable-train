@@ -3,12 +3,12 @@
 ** the plagiarism policy found in the course syllabus.
 ** 
 ** Class: 			CSC 242
-** Assignment: 		Assignment 4
+** Assignment: 		Assignment 5
 ** File: 			main.cpp
-** Description: 	Quantity Counter
+** Description: 	spell check and encrypt/decrypt file text. 
 **
 ** Author: 			Cameron Beckwith
-** Date: 			08/24/2026
+** Date: 			09/04/2026
 ** -------------------------------------------------------------------------*/
 
 
