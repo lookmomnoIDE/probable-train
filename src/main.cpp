@@ -100,20 +100,20 @@ int main()
 		{
 			if(arg1 == "crypt")
 			{
-				std::string key = arg2;
-				std::string inputPath = arg3;
-				std::string outputPath = arg4;
-				cypherUpper = getCypher(key);
-				writeToFile(encrypt(cypherUpper, inputPath), outputPath);
+				//std::string key = arg2;
+				//std::string inputPath = arg3;
+				//std::string outputPath = arg4;
+				//cypherUpper = getCypher(arg2);
+				writeToFile(encrypt(getCypher(arg2), arg3), arg4);
 
 			}
 			else if(arg1 == "decrypt")
 			{
-				std::string key = arg2;
-				std::string inputPath = arg3;
-				std::string outputPath = arg4;
-				cypherUpper = getCypher(key);
-				writeToFile(decrypt(cypherUpper, inputPath), outputPath);
+				//std::string key = arg2;
+				//std::string inputPath = arg3;
+				//std::string outputPath = arg4;
+				//cypherUpper = getCypher(arg2);
+				writeToFile(decrypt(getCypher(arg2), arg3), arg4);
 			}
 		}
 
