@@ -7,7 +7,7 @@
 ** File: 			main.cpp
 ** Description: 	spell check and encrypt/decrypt file text. 
 **
-** Author: 			Cameron Beckwith
+** Author: 			Cameron Beckwith , Isiah Dixon, Michael Bloom
 ** Date: 			09/04/2026
 ** -------------------------------------------------------------------------*/
 
@@ -37,20 +37,17 @@ std::string title = R"raw(
 
 //Forward declarations
 
-class Dummy{public:std::vector<std::string> m_wordList;};
-void getWordList(std::string path, Dummy& dummy);
-std::vector<std::string> compareLists(Dummy& dict, Dummy& words);
-std::string getCypher(std::string key);
-std::string encrypt(std::string cypher, std::string path);
-std::string decrypt(std::string cypher, std::string path);
-std::string reverseString(std::string input);
-void writeToFile(const std::string& content, const std::string& path);
+class Dummy{public:std::vector<std::string> m_wordList;}; 					//Cameron
+void getWordList(std::string path, Dummy& dummy);							//Cameron
+std::vector<std::string> compareLists(Dummy& dict, Dummy& words);			//Cameron
+std::string getCypher(std::string key);										//Isiah
+std::string encrypt(std::string cypher, std::string path);					//michael
+std::string decrypt(std::string cypher, std::string path);					//Isiah
+std::string reverseString(std::string input);								//michael
+void writeToFile(const std::string& content, const std::string& path);		//michael
 
-std::string alphabetLower = "abcdefghijklmnopqrstuvwxyz";
+
 std::string alphabetUpper = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-std::string cypherLower;
-std::string cypherUpper;
-
 
 
 int main()
@@ -58,6 +55,11 @@ int main()
 
 	//running bool
 	bool running = true;
+	//made these classes for a few reasons. It's easier to type and keep track of, 
+	//I was worried about RAII at the beginning of the project
+	//It's easier to keep track of what's what. 
+	//It's a little easier to manage the memory
+	//I also thought about allocating on the heap, but that was unnecessary. 
 	Dummy dict = Dummy();
 	Dummy words = Dummy();
 
@@ -69,22 +71,21 @@ int main()
 		std::string arg1, arg2, arg3, arg4, arg5;
 		std::vector<std::string> missedWords;
 		std::cout << title << std::endl;
-		std::cout << " --help, -h, or ? for help." << std::endl;
+		std::cout << "--help, -h, or ? for help." << std::endl;
 		std::getline(std::cin, input);
 		std::istringstream iss(input);
 		iss >> input >> arg1 >> arg2 >> arg3 >> arg4 >> arg5;
 		//no empty inputs allowed!
-		if(input.empty())
-		{
-			std::cout << "Please enter a valid input." << std::endl;
-		}
-		if(input == "--help" || input == "-h" || input == "?")
+		if(input == "--help" || input == "-h" || input == "?" || input.empty())
 		{
 			std::cout << "--help, -h, or ? for the help menu" << std::endl;
 			std::cout << "--quit or -q to quit the program" << std::endl;
-			std::cout << "-a [path] [pathToCheck] or --assignment [path] [pathToCheck]" << std::endl;
-			std::cout << "-b [crypt/decrpyt] [key] [input path] [output path] or "<< std::endl;
-			std::cout << "--bassignment [crypt/decrpyt] [key] [input path] [output path]" << std::endl;
+			std::cout << "Operations:" << std::endl;
+			std::cout << "================================================" << std::endl;
+			std::cout << "-a 			[path] [pathToCheck] or " << std::endl;
+			std::cout << "--assignment 		[path] [pathToCheck]" << std::endl;
+			std::cout << "-b 			[crypt/decrpyt] [key] [input path] [output path] or "<< std::endl;
+			std::cout << "--bassignment 		[crypt/decrpyt] [key] [input path] [output path]" << std::endl;
 		}
 		else if(input == "--quit" || input == "-q")
 		{
@@ -94,37 +95,52 @@ int main()
 		//Magic
 		else if(input == "-a" || input == "--assignment")
 		{
+			//get the word list for both objects. 
 			getWordList(arg1, dict);
 			getWordList(arg2, words);
+			//compare the list for items that appear in words but not dict. 
 			missedWords = compareLists(dict, words);
+			//if missed words is greater than 0
 			if(missedWords.size() > 0)
 			{
+				//then for each missed word we print it to the console. 
 				for(size_t i = 0; i < missedWords.size(); i++)
 				{
 					std::cout << missedWords[i] << " " << std::endl;
 				}
 			}
+			//no missed words found. 
+			else if(missedWords.size() == 0)
+			{
+				std::cout << "No mispelled words were found!" << std::endl;
+			}
+			//Retroactively added words to dictionary!
+			else if(missedWords.size() < 0)
+			{
+				std::cout << "Retroactively added words to dictionary!" << std::endl;
+			}
 		}
 		else if(input == "-b" || input == "--bassignment")
 		{
+			//encryption
 			if(arg1 == "crypt")
 			{
-				//std::string key = arg2;
-				//std::string inputPath = arg3;
-				//std::string outputPath = arg4;
-				//cypherUpper = getCypher(arg2);
+				//key 			= arg2;
+				//inputPath 	= arg3;
+				//outputPath 	= arg4;
 				writeToFile(encrypt(getCypher(arg2), arg3), arg4);
-
 			}
+			//decryption
 			else if(arg1 == "decrypt")
 			{
-				//std::string key = arg2;
-				//std::string inputPath = arg3;
-				//std::string outputPath = arg4;
-				//cypherUpper = getCypher(arg2);
+				//key 			= arg2;
+				//inputPath 	= arg3;
+				//outputPath 	= arg4;
+				//overloading functions is fun!
 				writeToFile(decrypt(getCypher(arg2), arg3), arg4);
 			}
 		}
+		//catch all for invalid input
 		else
 		{
 			std::cout << "You needn't continue on this path of foolery" << std::endl;
@@ -132,39 +148,54 @@ int main()
 	}
 }
 
-
-void getWordList(std::string path, Dummy& dummy)
+//pass the path and dummy reference
+void getWordList(std::string path, Dummy& dummy)//Cameron
 {
+	//open word list
 	std::ifstream fin(path);
 	std::string word;
+	//since we create dummy objects once at the beginning of the program
+	//in order to prevent the list from growing forever we have to clear
+	//after each use. 
 	dummy.m_wordList.clear();
 	while (getline(fin, word))
 	{
 		//std::cout << word << std::endl;
+		//slow, but works. 
 		dummy.m_wordList.push_back(word);
 	}
+	//close the file
 	fin.close();
 }
 
 
-std::vector<std::string> compareLists(Dummy& dict, Dummy& words)
+//pass two dummy obects and this function compares the right against the left. 
+std::vector<std::string> compareLists(Dummy& dict, Dummy& words)//Cameron
 {
-	auto D = dict.m_wordList;
-	auto W = words.m_wordList;
+	//grab the wordlist
+	auto& D = dict.m_wordList;
+	auto& W = words.m_wordList;
+	//declare missed words list
 	std::vector<std::string> missedWords;
+	//for each word to be checked 
 	for(size_t i = 0; i < W.size(); i++)
 	{
 		bool found = false;
+		//for each word to be checked against. 
 		for(size_t j = 0; j < D.size(); j++)
 		{
+			//if those words are the same
 			if(W[i] == D[j])
 			{
+				//found == true and we escape second loop 
 				found = true;
 				break;
 			}
 		}
+		//if found == false
 		if(!found)
-		{
+		{	
+			//add the word to the missed word list. 
 			missedWords.push_back(W[i]);
 		}
 	}

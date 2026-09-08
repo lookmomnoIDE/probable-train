@@ -1,3 +1,40 @@
+pseudocode
+
+create dictionary
+create wordlist
+main loop
+   if input = -a
+      dict = words
+      words = words
+      compare dict and words
+      if missed words size is greater than 0
+         print words in missed words. 
+
+   if the input is -b
+      first argument is crypt
+         get cypher
+         encrypt the message with cypher
+         write that message to the console and desired file. 
+      first argument is decrypt
+         get cypher
+         decrypt the message with cypher
+         write that message to the console and desired file.
+
+get word list
+   open desired file
+      for each line in that file
+         add that line to the specified wordlist. 
+   close the file. 
+
+
+compareList
+   for each word to be checked
+      for each word to be checked against.
+         if those words are the same
+            found == true and we escape second loop 
+      if found == false
+         add the word to the missed word list.
+
 Write a program that checks the spelling of all words in a file. It should read each word of a file and check whether it is contained in a word list. A word list is available on most UNIX systems (including Linux and Mac OS X) in the file /usr/share/dict/words. (If you don’t have access to a UNIX system, you can find a copy of the file on the Internet by searching for /usr/share/dict/words.) The program should print out all words that it cannot find in the word list. Follow this pseudocode:
 Open the dictionary file.
 
