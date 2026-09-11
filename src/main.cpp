@@ -203,23 +203,34 @@ std::vector<std::string> compareLists(Dummy& dict, Dummy& words)//Cameron
 }
 
 
+// Builds a substitution cypher (a scrambled version of the alphabet) from a keyword.
+// The key's own letters come first, in the order they appear (duplicates skipped),
+// then whatever letters are left over get tacked on at the end.
+// Example: key "DOG" -> cypher starts "DOG..." then the rest of the unused letters.
 std::string getCypher(std::string key)
 {
-	std::string cypher;
-	std::string temp = alphabetUpper;
+	std::string cypher;           // the cypher alphabet we're building
+	std::string temp = alphabetUpper;   // working copy of A-Z we can remove letters from
+
+	// walk through every letter in the key
 	for(size_t i = 0; i < key.length(); i++)
 	{
+		// look for that letter inside the letters we haven't used yet
 		for(size_t j = 0; j < temp.length(); j++)
 		{
 			if(key[i] == temp[j])
 			{
-				temp.erase(j, 1);
-				cypher += key[i];
+				temp.erase(j, 1);      // remove it so it can't be used again (handles duplicate letters in the key)
+				cypher += key[i];      // add it to the front section of the cypher
 			}
 		}
 	}
+
+	// whatever letters are left in temp (never used by the key) get appended,
+	// reversed, so the cypher always ends up 26 characters long
 	cypher += reverseString(temp);
-	std::cout << "cypher in getCypher: " << cypher << std::endl;
+
+	std::cout << "cypher in getCypher: " << cypher << std::endl;  // debug print
 	return cypher;
 }
 
@@ -251,24 +262,34 @@ std::string encrypt(std::string cypher, std::string path)
 }
 
 
+// Reverses an encryption: takes the encrypted file at "path" and turns it back
+// into plain text using the same cypher that was used to encrypt it.
+// For every character in the encrypted file, we find where that character sits
+// inside "cypher", then use that same position to pull the real letter out of
+// alphabetUpper. This is exactly the reverse lookup of what encrypt() does.
 std::string decrypt(std::string cypher, std::string path)
 {
-	std::ifstream fin(path);
-	std::string message;
-	std::string output;
+	std::ifstream fin(path);   // open the encrypted file for reading
+	std::string message;       // holds one line at a time
+	std::string output;        // holds the decrypted result
+
 	while(getline(fin, message))
 	{
+		// go through every character on this line
 		for(size_t j = 0; j < message.length(); j++)
 		{
+			// find that character's position inside the cypher alphabet
 			for(size_t i = 0; i < cypher.length(); i++)
 			{
 				if(message[j] == cypher[i])
 				{
+					// same position in alphabetUpper gives us the original letter
 					output += alphabetUpper[i];
 				}
 			}
 		}
 	}
+
 	fin.close();
 	return output;
 }
