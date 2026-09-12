@@ -237,25 +237,32 @@ std::string getCypher(std::string key)
 
 std::string encrypt(std::string cypher, std::string path)
 {
+	//open file and delcare variables
 	std::ifstream fin(path);
 	std::string message;
 	std::string output;
 	std::cout << "cypher in encrypt " << cypher << std::endl;
+	//while theres content
 	while (getline(fin, message))
 	{
 		std::cout << message << std::endl;
+		//fix the message character
 		for(size_t j = 0; j < message.length(); j++)
 		{
+
 			for(size_t i = 0; i < alphabetUpper.length(); i++)
 			{
+				//check each alphabet char against message char
 				if(message[j] == alphabetUpper[i])
 				{
+					//if they match add it to the output
 					std::cout << cypher[i] << std::endl;
 					output += cypher[i];
 				}
 			}
 		}
 	}
+	//close file and return output
 	std::cout << output << std::endl;
 	fin.close();
 	return output;
@@ -294,21 +301,28 @@ std::string decrypt(std::string cypher, std::string path)
 	return output;
 }
 
-
+//open file stream for writing at the specified path
 void writeToFile(const std::string& content, const std::string& path)
 {
+
 	std::ofstream fout(path);
+	//print content to console
 	std::cout << content << std::endl;
+	//write content  to output file
 	fout << content;
+	//close output file stream
 	fout.close();
 }
 
 
+//declare output string variable
 std::string reverseString(std::string input)
 {
 	std::string output;
+	//loop through input string characters
 	for(size_t i = 0; i < input.length(); i++)
 	{
+		//append character from back of input string to output
 		output += input[input.length()-i];
 	}
 	return output;
